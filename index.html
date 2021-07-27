@@ -49,7 +49,7 @@
 			  margin: auto;
 			  width: 80%;
 			  padding: 10px;
-			  height: 80vh;
+			  height: 75vh;
 			}
 			.container {
 				height: auto;
@@ -78,7 +78,7 @@
 			  margin: auto;
 			  width: 80%;
 			  padding: 10px;
-			  height: 84vh;
+			  height: 80vh;
 			}
 
 			.summary {
@@ -129,7 +129,7 @@
             }
             
             .outer-ul{
-                font-size: 30px; 
+                font-size: 20px; 
                 margin-left: 25px; 
                 margin-top:5px; 
                 margin-bottom: 5px;
@@ -137,8 +137,12 @@
             }
 
             .inner-ul{
-                font-size: 20px;
+                font-size: 16px;
                 list-style-type: square;
+            }
+
+            .desc{
+                font-size: 14px;
             }
 
         /* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
@@ -159,7 +163,7 @@
 
     <header>
         <span style="display: flex;">
-            <h2>US House Hold Debt : &nbsp;&nbsp;</h2>
+            <h2>US Household Debt : &nbsp;&nbsp;</h2>
             <h2 id="sceneTitle"></h2>
         </span>
     </header>
@@ -168,7 +172,7 @@
         <div class="summary-container-center scene" id="scene0" >
             <div class="summary">
                 <div>
-                    <p style="text-align: center;font-size: 50px; font-weight: bolder; margin: 5px;"> US Household Debt</p>
+                    <p style="text-align: center;font-size: 40px; font-weight: bolder; margin: 5px;"> US Household Debt</p>
                     <p style="text-align: center;font-size: 16px;font-weight: lighter;margin: 1px;">Understand the US household debt as a nation, state and by age</p>
                 </div>
                 <div style="border-bottom:lightgray;border-style: solid;border-width: 1px;border-color: lightgray;margin-left: 15px;margin-right: 15px;"></div>
@@ -206,7 +210,9 @@
                     <ul class="outer-ul">
                         <li><b>Libraries</b>
                             <ul class="inner-ul">
-                                <li>d3.js</li>
+                                <li>d3.js for charts and annotations</li>
+                                <li>JQuery core for navigation</li>
+                                <li>No other Libraries used</li>
                             </ul>
                         </li>
                     </ul>
@@ -231,7 +237,7 @@
                 <svg id="scene1_svg" width="100%" height="100%"></svg>
             </div>
             <div class="parameter" id="scene1_param"></div>    
-            <div class="div2"><p>US household debt has reached to a new high in the first quarter of 2021 to $14.64 Trillion due primarily to a jump in mortages and auto loans.
+            <div class="div2"><p class="desc">US household debt has reached to a new high in the first quarter of 2021 to $14.64 Trillion due primarily to a jump in mortages and auto loans.
                 Historically low mortage interests rate has fueled the housing frenzy which lead to the increase in mortage debt. From 20:Q1 to 21:Q1 the mortage debt has accumulated more than half a billion dolloars.
                 Student loan is also on the rise year over year which reached $1 Trilliion 2013, now it sits at $1.58 Trillion. Auto loan is sitting at $1.38 billion up $8 billion from 20:Q1 Surprisingly the credit card debt has come down from $820 billion to $770 billion.
                 Thanks to the pandemic and goverment policies (stimulus checks) people were able to save more money and pay off the credit card debt.
@@ -243,10 +249,10 @@
                 <svg id="scene2_svg" width="100%" height="100%"></svg>
             </div>
             <div class="parameter" id="scene2_param"></div>
-            <div class="div2"><p>Household in California ranks highest in the country with $73.46 Thousands. As no surprise, with high real estate cost, mortage debt contributes $58.39 Thousands.
+            <div class="div2"><p class="desc">Household in California ranks highest in the country with $73.46 Thousands. As no surprise, with high real estate cost, mortage debt contributes $58.39 Thousands.
                 Second highest household debt is in New Jersey sitting at $59.97 Thousands. It is no surprise that both the coast has high living expenses hence hight debt ratio. 
                 US average debt is $52.94 in 2021:Q1</p>
-                <p>*Based on the population with a credit report. Only top 11 states with a high population considered for the analysis</p>
+                <p class="desc">*Based on the population with a credit report. Only top 11 states with a high population considered for the analysis</p>
             </div>
         </div>
 
@@ -255,11 +261,11 @@
                 <svg id="scene3_svg" width="100%" height="100%"></svg>
             </div>
             <div class="parameter" id="scene3_param"></div>    
-            <div class="div2"><p>Looking over a decade, an average US household debt kept increasing. As we saw in previous screen California and New Jersey are on the rise in per capita debt.
+            <div class="div2"><p class="desc">Looking over a decade, an average US household debt kept increasing. As we saw in previous screen California and New Jersey are on the rise in per capita debt.
                 During 2007-2008 recession California and Arizona had accumulated highest debt per capita $88.3 and $89.61 Thousands respectively. Even though pandemic has helped
                 to reduce credit card debt but it did not have any impact in reducing the per capita debt rather the debt is climibing higher and higher, year over year and quarter over quarter.
             </p>
-                <p>*Based on the population with a credit report. Only top 11 states with a high population considered for the analysis</p></div>
+                <p class="desc">*Based on the population with a credit report. Only top 11 states with a high population considered for the analysis</p></div>
         </div>
 
         <div class="center scene" id="scene4"  style="display: none;">
@@ -267,7 +273,7 @@
                 <svg id="scene4_svg" width="100%" height="100%"></svg>
             </div>
             <div class="parameter" id="scene4_param"></div>    
-            <div class="div2"><p>Highest debt accumulators over the decade are Millenials(30-39) Gen X(40-49) and Baby Boomers(50-59). Out of which Gen X is the most indebted generation whose debt has increaed year over year.
+            <div class="div2"><p class="desc">Highest debt accumulators over the decade are Millenials(30-39) Gen X(40-49) and Baby Boomers(50-59). Out of which Gen X is the most indebted generation whose debt has increaed year over year.
                 The younger generation Gen Z(18-29) has loweset debt. Gen X total debt is 3 times higher than the Gen Z. It is a natural cycle that with people reaching their adulthood debt grows along with it.
                 Silent generation (70+), even though their debt is low compared to other generations, it is constantly inching upwards.
             </p></div>
@@ -278,7 +284,7 @@
                 <svg id="scene5_svg" width="100%" height="100%"></svg>
             </div>
             <div class="parameter" id="scene5_param"></div>    
-            <div class="div2"><p>In past few years the delinquency rate across all the age groups is following a downward trend which is a good sign. During 2007-2008 pretty much all the age groups
+            <div class="div2"><p class="desc">In past few years the delinquency rate across all the age groups is following a downward trend which is a good sign. During 2007-2008 pretty much all the age groups
                 had high delinquency rates out of wihich Gen Z, Gen X and Millenials rate were high. We can see a sharp dip in delinquency rates for all age groups during the pandemic period.
                 It is because of the goverment policies the delinquency rate has declined. It will be interesting to see what happens after those polices expire.
             </p></div>

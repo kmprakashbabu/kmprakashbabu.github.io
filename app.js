@@ -306,7 +306,7 @@ function changeSceneTitle(){
 
 
 function generateMultiLineChart(sceneConfig,parentEL,svg,url,xCol,yColTitle,yColRange,colorMap,seriesNames,paramContainerID,pivotCol){
-    let margin = {top: 50, right: 20, bottom: 30, left: 60},
+    let margin = {top: 50, right: 20, bottom: 10, left: 60},
     width = +parentEL.width() - margin.left - margin.right,
     height = +parentEL.height() - margin.top - margin.bottom;
 
@@ -388,7 +388,7 @@ function generateMultiLineChart(sceneConfig,parentEL,svg,url,xCol,yColTitle,yCol
             .attr('class', 'axis-label')
             .text(xCol)
             .attr('x', margin.left + (width - margin.left - margin.right) / 2)
-            .attr('y', height+margin.bottom); // Relative to the x axis.;
+            .attr('y', height+margin.bottom+30); // Relative to the x axis.;
 
         svg.append('text')
             .attr('class', 'axis-label')
@@ -492,7 +492,7 @@ function generateMultiLineChart(sceneConfig,parentEL,svg,url,xCol,yColTitle,yCol
 }
 
 function generateStackedBarChart(sceneConfig,parentEL,svg,url,xCol, yCol, yColTitle, barCols,colorMap,paramContainerID){
-    let margin = {top: 50, right: 20, bottom: 30, left: 60},
+    let margin = {top: 50, right: 20, bottom: 10, left: 60},
     width = +parentEL.width() - margin.left - margin.right,
     height = +parentEL.height() - margin.top - margin.bottom;
 
@@ -553,7 +553,7 @@ function generateStackedBarChart(sceneConfig,parentEL,svg,url,xCol, yCol, yColTi
             .attr('class', 'axis-label')
             .text(xCol)
             .attr('x', margin.left + (width - margin.left - margin.right) / 2)
-            .attr('y', height+margin.bottom); // Relative to the x axis.;
+            .attr('y', height+margin.bottom+30); // Relative to the x axis.;
 
         svg.append('text')
             .attr('class', 'axis-label')
@@ -637,7 +637,7 @@ function drawAnnotationForLineChart(sceneConfig){
             let lineY = y(aData.yVal);
 
             let rx = markerDirection == "h" ? "70px" : "25px";
-            let ry = markerDirection == "h" ? "50px" : reduceMarkerHeight ? "90px" : "125px";
+            let ry = markerDirection == "h" ? "50px" : reduceMarkerHeight ? "80px" : "105px";
 
             let gX = textDirection == "r" ? (lineX+75) : lineX-145;
             let gY = textDirection == "r" ? (lineY-50) : lineY-175;
@@ -687,7 +687,7 @@ function drawAnnotation(sceneConfig){
     let height = sceneConfig.height;
     let annotationData = sceneConfig.annotationData;
     if(annotationData){
-        let rectW = 100;
+        let rectW = 85;
         let rectH = 60;
         for(let aData of annotationData){
     
@@ -727,7 +727,7 @@ function drawAnnotation(sceneConfig){
                 .attr("y", 10)
                 //.attr("dx",5)
                 //.attr("dy", ".35em")
-                .attr("font-size","14px")
+                .attr("font-size","12px")
                 .style("fill","white")
                 .style("opacity", 1);
     
