@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>Narrative Visualization</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        header {
+            background-color: #666;
+            padding: 2px;
+            /*text-align: center;*/
+            font-size: 10px;
+            color: white;
+        }
+
+        section::after {
+            content: "";
+            display: table;
+            clear: both;
+        }
+
+        footer {
+            background-color: white;
+            padding: 10px;
+            text-align: center;
+            color: white;
+            border-top:lightgray;
+            border-width: 1px;
+            border-style: solid;
+        }
+
+        .attribution{
+            background-color: #777;
+            padding: 2px;
+            text-align: center;
+            color: white;
+        }
+
+        .center {
+			  margin: auto;
+			  width: 80%;
+			  padding: 10px;
+			  height: 80vh;
+			}
+			.container {
+				height: auto;
+				width: 100%;
+			}
+			.div1 {
+				float: left;
+				height: 80%;
+				width: 100%;
+				border-style: solid;
+				border-color:lightgray;
+                border-width: 1px;
+			}
+			.div2 {
+				float: left;
+				height: 20%;
+				width: 100%;
+			}			
+			.parameter {
+                float: left;
+				height: 50px;
+				width: 100%;
+                padding: 12px;
+			}
+            .summary-container-center {
+			  margin: auto;
+			  width: 80%;
+			  padding: 10px;
+			  height: 84vh;
+			}
+
+			.summary {
+				float: left;
+				height: 100%;
+				width: 100%;
+				border-style: solid;
+				border-color:lightgray;
+                border-width: 1px;
+			}
+
+            div.tooltip {	
+                position: absolute;			
+                text-align: center;			
+                padding: 5px;				
+                font: 12px sans-serif;		
+                background:black;
+                color: white;
+                border: 2px;		
+                border-color:black;
+                border-radius: 2px;			
+                pointer-events: none;			
+            }
+            td.fitwidth {
+                width: 1px;
+                white-space: nowrap;
+                text-align: right;
+            }
+            .axis-label {
+                fill: #000;
+                font-size: 16px;
+                text-anchor: middle;
+            }
+            .button {
+                background-color: #008CBA; /* Green */
+                border: none;
+                color: white;
+                padding: 5px 32px;
+                text-align: center;
+                text-decoration: none;
+                display: inline-block;
+                font-size: 16px;
+                margin: 2px 2px;
+                cursor: pointer;
+            }
+            .button:disabled{
+                background-color: gray;
+            }
+            
+            .outer-ul{
+                font-size: 30px; 
+                margin-left: 25px; 
+                margin-top:5px; 
+                margin-bottom: 5px;
+                list-style-type: square;
+            }
+
+            .inner-ul{
+                font-size: 20px;
+                list-style-type: square;
+            }
+
+        /* Responsive layout - makes the two columns/boxes stack on top of each other instead of next to each other, on small screens */
+        /*@media (max-width: 600px) {
+  nav, article {
+    width: 100%;
+    height: auto;
+  }
+}*/
+    </style>
+
+    <script type="text/javascript" src="lib/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="lib/d3/dist/d3.min.js"></script>
+    <script type="text/javascript" src="app.js"></script>
+</head>
+
+<body>
+
+    <header>
+        <span style="display: flex;">
+            <h2>US House Hold Debt : &nbsp;&nbsp;</h2>
+            <h2 id="sceneTitle"></h2>
+        </span>
+    </header>
+
+    <section>
+        <div class="summary-container-center scene" id="scene0" >
+            <div class="summary">
+                <div>
+                    <p style="text-align: center;font-size: 50px; font-weight: bolder; margin: 5px;"> US Household Debt</p>
+                    <p style="text-align: center;font-size: 16px;font-weight: lighter;margin: 1px;">Understand the US household debt as a nation, state and by age</p>
+                </div>
+                <div style="border-bottom:lightgray;border-style: solid;border-width: 1px;border-color: lightgray;margin-left: 15px;margin-right: 15px;"></div>
+                <div>
+                    <ul class="outer-ul">
+                        <li><b>Table of contents</b>
+                            <ul class="inner-ul">
+                                <li>Introduction</li>
+                                <li>National Total Debt Balance and its Composition</li>
+                                <li>Composition of Debt Balance per Capita* by State (2021 Q1)</li>
+                                <li>Total Debt Balance per Capita* by State</li>
+                                <li>Total Debt Balance by Age</li>
+                                <li>Quarterly Transition into Serious Delinquency (90+) by Age</li>
+                                <li>Summary</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="outer-ul">
+                        <li><b>Data</b>
+                            <ul class="inner-ul">
+                                <li><b>Source</b> Data for this Visualization is used from <a href="https://www.newyorkfed.org/microeconomics/databank.html">https://www.newyorkfed.org/microeconomics/databank.html</a>
+                                    <p style="margin: 1px;">Under "Access data by topic", "STATE-LEVEL DATA" is downloaded</p>
+                                </li>
+                                <li><p style="margin: 2px;"><b>Preparation</b> Downloaded dataset is in excel format. Data required for the scenes are saved as .csv file from individual excel sheets.
+                                        Then removed unwanted excel rows which desribes the data. Added data headers as needed. Removed the unwanted data. Added new columns as needed, 
+                                        for example column "Total" as added as required. For the line charts the data is tranposed as needed.
+                                </p> </li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="outer-ul">
+                        <li><b>Libraries</b>
+                            <ul class="inner-ul">
+                                <li>d3.js</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div>
+                    <ul class="outer-ul">
+                        <li><b>Hints for all the scenes</b>
+                            <ul class="inner-ul">
+                                <li>Tooltip and filtering is provided in all the scenes</li>
+                                <li>Annotations are provide in all the charts. Annotations in a scene visible only for the entire dataset. Applying filter will remove the annotations. Check all the options again to see the annotation</li>
+                                <li>For the line charts an option to show/hide the line data points is provided so that tooltip can be visualizied easily</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="center scene" id="scene1" style="display: none;">
+            <div class="div1" id="scene1_chart">
+                <svg id="scene1_svg" width="100%" height="100%"></svg>
+            </div>
+            <div class="parameter" id="scene1_param"></div>    
+            <div class="div2"><p>US household debt has reached to a new high in the first quarter of 2021 to $14.64 Trillion due primarily to a jump in mortages and auto loans.
+                Historically low mortage interests rate has fueled the housing frenzy which lead to the increase in mortage debt. From 20:Q1 to 21:Q1 the mortage debt has accumulated more than half a billion dolloars.
+                Student loan is also on the rise year over year which reached $1 Trilliion 2013, now it sits at $1.58 Trillion. Auto loan is sitting at $1.38 billion up $8 billion from 20:Q1 Surprisingly the credit card debt has come down from $820 billion to $770 billion.
+                Thanks to the pandemic and goverment policies (stimulus checks) people were able to save more money and pay off the credit card debt.
+            </p></div>
+        </div>
+        
+        <div class="center scene" id="scene2" style="display: none;">
+            <div class="div1" id="scene2_chart">
+                <svg id="scene2_svg" width="100%" height="100%"></svg>
+            </div>
+            <div class="parameter" id="scene2_param"></div>
+            <div class="div2"><p>Household in California ranks highest in the country with $73.46 Thousands. As no surprise, with high real estate cost, mortage debt contributes $58.39 Thousands.
+                Second highest household debt is in New Jersey sitting at $59.97 Thousands. It is no surprise that both the coast has high living expenses hence hight debt ratio. 
+                US average debt is $52.94 in 2021:Q1</p>
+                <p>*Based on the population with a credit report. Only top 11 states with a high population considered for the analysis</p>
+            </div>
+        </div>
+
+        <div class="center scene" id="scene3"  style="display: none;">
+            <div class="div1" id="scene3_chart">
+                <svg id="scene3_svg" width="100%" height="100%"></svg>
+            </div>
+            <div class="parameter" id="scene3_param"></div>    
+            <div class="div2"><p>Looking over a decade, an average US household debt kept increasing. As we saw in previous screen California and New Jersey are on the rise in per capita debt.
+                During 2007-2008 recession California and Arizona had accumulated highest debt per capita $88.3 and $89.61 Thousands respectively. Even though pandemic has helped
+                to reduce credit card debt but it did not have any impact in reducing the per capita debt rather the debt is climibing higher and higher, year over year and quarter over quarter.
+            </p>
+                <p>*Based on the population with a credit report. Only top 11 states with a high population considered for the analysis</p></div>
+        </div>
+
+        <div class="center scene" id="scene4"  style="display: none;">
+            <div class="div1" id="scene4_chart">
+                <svg id="scene4_svg" width="100%" height="100%"></svg>
+            </div>
+            <div class="parameter" id="scene4_param"></div>    
+            <div class="div2"><p>Highest debt accumulators over the decade are Millenials(30-39) Gen X(40-49) and Baby Boomers(50-59). Out of which Gen X is the most indebted generation whose debt has increaed year over year.
+                The younger generation Gen Z(18-29) has loweset debt. Gen X total debt is 3 times higher than the Gen Z. It is a natural cycle that with people reaching their adulthood debt grows along with it.
+                Silent generation (70+), even though their debt is low compared to other generations, it is constantly inching upwards.
+            </p></div>
+        </div>
+
+        <div class="center scene" id="scene5"  style="display: none;">
+            <div class="div1" id="scene5_chart">
+                <svg id="scene5_svg" width="100%" height="100%"></svg>
+            </div>
+            <div class="parameter" id="scene5_param"></div>    
+            <div class="div2"><p>In past few years the delinquency rate across all the age groups is following a downward trend which is a good sign. During 2007-2008 pretty much all the age groups
+                had high delinquency rates out of wihich Gen Z, Gen X and Millenials rate were high. We can see a sharp dip in delinquency rates for all age groups during the pandemic period.
+                It is because of the goverment policies the delinquency rate has declined. It will be interesting to see what happens after those polices expire.
+            </p></div>
+        </div>
+        <div class="summary-container-center scene" id="scene6" style="display: none;">
+            <div class="summary">
+                <div>
+                    <p style="text-align: center;font-size: 50px; font-weight: bolder; margin: 5px;"> US Household Debt</p>
+                    <p style="text-align: center;font-size: 16px;font-weight: lighter;margin: 1px;">Understand the US household debt as a nation, state and by age</p>
+                </div>
+                <div style="border-bottom:lightgray;border-style: solid;border-width: 1px;border-color: lightgray;margin-left: 15px;margin-right: 15px;"></div>
+                <div>
+                    <ul class="outer-ul">
+                        <li><b>Conclusion</b>
+                            <ul class="inner-ul">
+                                <li>In 2003, total household debt was at $7.23 Trillions. In 2021 it is doubled and at $14.64 Trillions</li>
+                                <li>Student loan debt is sitting at staggering $1.54 Trillions. Even though it is not as high as mortage debt it is one of the fastest growing debt.</li>
+                                <li>People are paying high price to own a home. Mortgage debt contributes to more than 60% of a household debt. 
+                                    As we seen the fundamental driver of the mortgate debt is historically low interest rates</li>
+                                <li>Households in California ranks high in the per capita debt in the country which is higher than the national average</li>
+                                <li>Gen X is most indebted generation of all</li>
+                                <li>National debt is a hot topic in Today's political climate as it has grown to unprecedented levels. 
+                                    It is a worrisome sign as the economic gurus are hinting at a never seen crash in all the sectors.</li>
+                                <li>Thanks to low interest rates the increase in debt is managable.</li>    
+                                <li>In near future if Fed raises the interest rate will it lead to another great recession?</li>
+                             </ul>
+                        </li>        
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <button id="previousButton" class="button" disabled> < Previous</button>
+        <button id="nextButton" class="button"> Next ></button>
+    </footer>
+    <footer class="attribution">
+        <span>Author : Prakash Babu Kanuppa Mohan</span>
+    </footer>
+
+</body>
+
+</html>
