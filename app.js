@@ -451,7 +451,7 @@ function generateMultiLineChart(sceneConfig,parentEL,svg,url,xCol,yColTitle,yCol
                     //d3.select(this).attr("opacity",1);
                     let tooltipText = "<table width=125>";
                     tooltipText += "<tr ><td colspan='3' style=' border-bottom: 1px solid white;'>"+yColTitle+"</td></tr>";
-                    tooltipText += "<tr ><td colspan='3' style=' border-bottom: 1px solid white;'>"+sName+"</td></tr>";
+                    tooltipText += "<tr ><td colspan='3' style=' border-bottom: 1px solid white; color:"+colorMap[sName]+";'>"+sName+"</td></tr>";
                     tooltipText += "<tr>";
                     tooltipText += "<td class='fitwidth'>"+d+"</td>";
                     tooltipText += "<td>:</td>";
@@ -587,11 +587,19 @@ function generateStackedBarChart(sceneConfig,parentEL,svg,url,xCol, yCol, yColTi
             .on("mouseover", function(event,d) {
                 let tooltipText = "<table width=125>";
                 tooltipText += "<tr ><td colspan='3' style=' border-bottom: 1px solid white;'>"+yColTitle+"</td></tr>";
+                tooltipText += "<tr ><td colspan='3' style=' border-bottom: 1px solid white;'>"+d.data[xCol]+"</td></tr>";                
                 barCols.forEach(aCol => {
                     tooltipText += "<tr>";
-                    tooltipText += "<td class='fitwidth'>"+aCol+"</td>";
-                    tooltipText += "<td>:</td>";
-                    tooltipText += "<td>"+d.data[aCol]+"</td>";
+                    if(aCol == d.key){
+                        tooltipText += "<td class='fitwidth' style='color:"+colorMap[d.key]+";'>"+aCol+"</td>";
+                        tooltipText += "<td>:</td>";
+                        tooltipText += "<td style='color:"+colorMap[d.key]+";'>"+d.data[aCol]+"</td>";
+                    }
+                    else{
+                        tooltipText += "<td class='fitwidth'>"+aCol+"</td>";
+                        tooltipText += "<td>:</td>";
+                        tooltipText += "<td>"+d.data[aCol]+"</td>";
+                    }
                     tooltipText += "</tr>";
                 });
 
@@ -601,12 +609,15 @@ function generateStackedBarChart(sceneConfig,parentEL,svg,url,xCol, yCol, yColTi
                     .style("opacity", .9);		
                 div.html(tooltipText)	
                     .style("left", (event.pageX) + "px")		
-                    .style("top", (event.pageY) + "px");	
+                    .style("top", (event.pageY) + "px");
+                
+                d3.select(this).attr("stroke","black").attr("stroke-width",1);                    
                 })					
             .on("mouseout", function(d) {		
                 div.transition()		
                     .duration(500)		
-                    .style("opacity", 0);	
+                    .style("opacity", 0);
+                d3.select(this).attr("stroke","none");                    
             });
 
             if(barCols.length == sceneConfig.barCols.length)
@@ -637,7 +648,7 @@ function drawAnnotationForLineChart(sceneConfig){
             let lineY = y(aData.yVal);
 
             let rx = markerDirection == "h" ? "70px" : "25px";
-            let ry = markerDirection == "h" ? "50px" : reduceMarkerHeight ? "80px" : "105px";
+            let ry = markerDirection == "h" ? "50px" : reduceMarkerHeight ? "90px" : "115px";
 
             let gX = textDirection == "r" ? (lineX+75) : lineX-145;
             let gY = textDirection == "r" ? (lineY-50) : lineY-175;
